@@ -19,5 +19,34 @@ update imdb_movies set
 Month = 'unknown'
 where Month in ('2008','2014');
 
-select distinct(Certificate) from imdb_movies
-order by Certificate; #not rated unrated blanks
+#update blank and not rated to unrated
+update imdb_movies set
+Certificate = 'unrated'
+where Certificate in ('not rated','');
+
+select distinct(Runtime) from imdb_movies
+order by Runtime;
+
+select distinct(Stars) from imdb_movies
+order by Stars;
+
+select distinct(Genre) from imdb_movies
+order by Genre;
+
+select distinct(Filming_location) from imdb_movies
+order by Filming_location; #'The Netherlands' facebook  UK 'United Kingdom'
+
+update imdb_movies set
+Filming_location = 'Netherlands'
+where Filming_location = 'The Netherlands';
+
+update imdb_movies set
+Filming_location = 'unknown'
+where Filming_location = 'Official Facebook';
+
+update imdb_movies set
+Filming_location = 'United Kingdom'
+where Filming_location = 'UK';
+
+/*ALTER TABLE imdb_movies
+ADD COLUMN Budget_Copy TEXT;*/
