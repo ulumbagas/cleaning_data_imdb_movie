@@ -35,3 +35,18 @@ WHERE
     <img width="70%" src="https://github.com/ulumbagas/cleaning_data_imdb_movie/assets/58242856/0366de2f-bba2-4ca2-80d1-e1601720cd9d"> 
 </p>
 
+### 3. Filming location
+Film location column contains inconsistent data and noise, such as "UK" and "United Kingdom", as well as "Official Facebook" which does not indicate a specific location. Next, "Official Facebook" will be replaced with "Unknown", "The Netherland" will be replaced with "Netherlands", and "UK" will be replaced with "United Kingdom".
+
+```
+UPDATE imdb_movies
+SET
+    Filming_location = 
+    CASE 
+        WHEN Filming_location = 'The Netherlands' THEN 'Netherlands'
+        WHEN Filming_location = 'Official Facebook' THEN 'unknown'
+        WHEN Filming_location = 'UK' THEN 'United Kingdom'
+        ELSE Filming_location
+    END;
+```
+
