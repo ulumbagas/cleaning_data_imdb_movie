@@ -50,3 +50,17 @@ SET
     END;
 ```
 
+### 4. Budget
+In the "budget" column, there are nominal film production costs, but there is also data such as "Unknown" and various currencies like Dollar, Euro, Rupee, and others.
+<!--- isi gambar dari ini
+select Budget from imdb_movies
+where left(Budget,1) != '$' AND Budget != 'Unknown' ; --->
+
+The initial step is to clean unnecessary characters, such as spaces and commas, and replace "Unknown" with 0. I changed "Unknown" to 0 because later I will change the data type to BIGINT.
+```
+UPDATE imdb_movies 
+SET 
+    Budget = REPLACE(REPLACE(REPLACE(TRIM(Budget), ',', ''), ' ', ''), 'Unknown', '0');
+
+```
+Next, the currency will be converted into dollars using the following code:
