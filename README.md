@@ -65,20 +65,4 @@ SET
 ```
 Next, the currency will be converted into dollars using the following code:
 
-```
-update imdb_movies set  Budget = 
-Case 
-when left(Budget,3)= 'CA$' then replace(Budget,'CA$','')
-when left(Budget,3)= 'SEK' then replace(Budget,'SEK','')
-when left(Budget,3)= 'DKK' then replace(Budget,'DKK','')
-when left(Budget,2)= 'A$' then replace(Budget,'A$','')
-when left(Budget,3)= 'NOK' then replace(Budget,'NOK','')
-when left(Budget,3)= 'CN¥' then replace(Budget,'CN¥','')
-when left(Budget,1)= '€' then replace(Budget,'€','')
-when left(Budget,1)= '₹' then replace(Budget,'₹','')
-when left(Budget,1)= '£' then replace(Budget,'£','')
-when left(Budget,1)= '₩' then replace(Budget,'₩','')
-when left(Budget,1)= '¥' then replace(Budget,'¥','')
-when left(Budget,1)= '$' then replace(Budget,'$','')
-else Budget end;
-```
+
