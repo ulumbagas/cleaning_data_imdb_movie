@@ -85,6 +85,12 @@ SET
 ### 4. Budget
 In the Budget column there are nominal film production costs, but there is also data such as "Unknown" and various currencies like Dollar, Euro, Rupee, and others. The first step is to clean unnecessary characters, such as spaces and commas, and replace "Unknown" with 0. I changed "Unknown" to 0 because I will later change the data type to BIGINT.
 
+created a new column called "Budget_USD."
+```
+ALTER TABLE imdb_movies
+ADD COLUMN Budget_USD TEXT
+```
+
 TRIM() function is used to remove leading and trailing spaces
 ```
 UPDATE imdb_movies 
@@ -98,4 +104,48 @@ SET Budget_USD = CASE
 	WHEN Budget_USD = 'Unknown' THEN 0
     ELSE REPLACE(Budget_USD, ',', '')
 END;
+```
+delete unnecessary currency symbol
+```
+update imdb_movies set  Budget_USD = 
+Case 
+when left(Budget_USD,3)= 'CA$' then replace(Budget_USD,'CA$','')
+when left(Budget_USD,3)= 'SEK' then replace(Budget_USD,'SEK','')
+when left(Budget_USD,3)= 'DKK' then replace(Budget_USD,'DKK','')
+when left(Budget_USD,2)= 'A$' then replace(Budget_USD,'A$','')
+when left(Budget_USD,3)= 'NOK' then replace(Budget_USD,'NOK','')
+when left(Budget_USD,3)= 'CN¥' then replace(Budget_USD,'CN¥','')
+when left(Budget_USD,1)= '€' then replace(Budget_USD,'€','')
+when left(Budget_USD,1)= '₹' then replace(Budget_USD,'₹','')
+when left(Budget_USD,1)= '£' then replace(Budget_USD,'£','')
+when left(Budget_USD,1)= '₩' then replace(Budget_USD,'₩','')
+when left(Budget_USD,1)= '¥' then replace(Budget_USD,'¥','')
+when left(Budget_USD,1)= '$' then replace(Budget_USD,'$','')
+else Budget_USD end;
+```
+
+changing the data type of the "budget" column to BIGINT
+```
+ALTER TABLE `cleaning_table`.`imdb_movies` 
+CHANGE COLUMN `Budget_USD` `Budget_USD` BIGINT NULL DEFAULT NULL ;
+```
+
+convert all currencies to USD
+```
+UPDATE imdb_movies SET Budget_USD = 
+	CASE 
+	WHEN LEFT(Budget,1) = '€'   THEN Budget_USD * 1.10 
+	WHEN LEFT(Budget,1) = '₹'   THEN Budget_USD * 0.012 
+	WHEN LEFT(Budget,1) = '£'   THEN Budget_USD * 1.24 
+	WHEN LEFT(Budget,1) = '₩'   THEN Budget_USD * 0.00076 
+	WHEN LEFT(Budget,1) = '¥'   THEN Budget_USD * 0.00076 
+	WHEN LEFT(Budget,3) = 'CA$' THEN Budget_USD * 0.754688 
+	WHEN LEFT(Budget,3) = 'SEK' THEN Budget_USD * 0.095 
+	WHEN LEFT(Budget,3) = 'DKK' THEN Budget_USD * 0.15 
+	WHEN LEFT(Budget,2) = 'A$'  THEN Budget_USD * 0.667143 
+	WHEN LEFT(Budget,3) = 'NOK' THEN Budget_USD * 0.098 
+	WHEN LEFT(Budget,3) = 'CN¥' THEN Budget_USD * 0.13994
+    else Budget_USD
+	END;
+
 ```
