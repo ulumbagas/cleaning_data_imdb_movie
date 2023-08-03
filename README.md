@@ -29,11 +29,30 @@ WHERE
     Month IN ('2008' , '2014');
 ```
 
-<!--- ![Untitled](https://github.com/ulumbagas/cleaning_data_imdb_movie/assets/58242856/0366de2f-bba2-4ca2-80d1-e1601720cd9d) --->
 
-<p align="center" width="70%">
-    <img width="70%" src="https://github.com/ulumbagas/cleaning_data_imdb_movie/assets/58242856/0366de2f-bba2-4ca2-80d1-e1601720cd9d"> 
+
+<!--- ![image](https://github.com/ulumbagas/cleaning_data_imdb_movie/assets/58242856/96374ae5-009f-4d28-9c70-3f29e0927bcc) --->
+
+<p align="center" width="30%">
+    <img width="30%" src="https://github.com/ulumbagas/cleaning_data_imdb_movie/assets/58242856/96374ae5-009f-4d28-9c70-3f29e0927bcc"> 
 </p>
+
+### 3.  Certificate
+Classification or rating given by film rating boards to determine who is suitable to watch the film based on age and the content presented in the movie. There is inconsistent data, which includes “unrated“, “not rated“, and null values. For the data cleaning process, I will convert all these values to “unrated“.
+
+```
+UPDATE imdb_movies 
+SET 
+    Certificate = 'unrated'
+WHERE
+    Certificate IN ('not rated' , '');
+```
+<!--- ![image](https://github.com/ulumbagas/cleaning_data_imdb_movie/assets/58242856/5f1ed541-a860-43f8-94f9-3660c27090f7) --->
+
+<p align="center" width="30%">
+    <img width="30%" src="https://github.com/ulumbagas/cleaning_data_imdb_movie/assets/58242856/5f1ed541-a860-43f8-94f9-3660c27090f7"> 
+</p>
+
 
 ### 3. Filming location
 Film location column contains inconsistent data and noise, such as "UK" and "United Kingdom", as well as "Official Facebook" which does not indicate a specific location. Next, "Official Facebook" will be replaced with "Unknown", "The Netherland" will be replaced with "Netherlands", and "UK" will be replaced with "United Kingdom".
@@ -49,6 +68,11 @@ SET
         ELSE Filming_location
     END;
 ```
+<!--- ![image](https://github.com/ulumbagas/cleaning_data_imdb_movie/assets/58242856/027dea53-8e1d-4446-91bf-999765713009) --->
+
+<p align="center" width="50%">
+    <img width="50%" src="https://github.com/ulumbagas/cleaning_data_imdb_movie/assets/58242856/027dea53-8e1d-4446-91bf-999765713009"> 
+</p>
 
 ### 4. Budget
 In the "budget" column, there are nominal film production costs, but there is also data such as "Unknown" and various currencies like Dollar, Euro, Rupee, and others.
