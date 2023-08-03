@@ -47,6 +47,14 @@ SET
 WHERE
     Certificate IN ('not rated' , '');
 ```
+
+```
+UPDATE imdb_movies 
+SET 
+    Certificate = null
+WHERE
+    Certificate = '';
+```
 <!--- ![image](https://github.com/ulumbagas/cleaning_data_imdb_movie/assets/58242856/5f1ed541-a860-43f8-94f9-3660c27090f7) --->
 
 <p align="center" width="30%">
@@ -75,18 +83,19 @@ SET
 </p>
 
 ### 4. Budget
-In the "budget" column, there are nominal film production costs, but there is also data such as "Unknown" and various currencies like Dollar, Euro, Rupee, and others.
-<!--- isi gambar dari ini
-select Budget from imdb_movies
-where left(Budget,1) != '$' AND Budget != 'Unknown' ; --->
+In the Budget column there are nominal film production costs, but there is also data such as "Unknown" and various currencies like Dollar, Euro, Rupee, and others. The first step is to clean unnecessary characters, such as spaces and commas, and replace "Unknown" with 0. I changed "Unknown" to 0 because I will later change the data type to BIGINT.
 
-The initial step is to clean unnecessary characters, such as spaces and commas, and replace "Unknown" with 0. I changed "Unknown" to 0 because later I will change the data type to BIGINT.
+TRIM() function is used to remove leading and trailing spaces
 ```
 UPDATE imdb_movies 
 SET 
-    Budget = REPLACE(REPLACE(REPLACE(TRIM(Budget), ',', ''), ' ', ''), 'Unknown', '0');
-
+    Budget_USD = TRIM(Budget_USD);
 ```
-Next, the currency will be converted into dollars using the following code:
-
-
+Replace "unknown" with 0 and delete comma
+```
+UPDATE imdb_movies
+SET Budget_USD = CASE
+	WHEN Budget_USD = 'Unknown' THEN 0
+    ELSE REPLACE(Budget_USD, ',', '')
+END;
+```
