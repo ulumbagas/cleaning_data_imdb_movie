@@ -149,3 +149,10 @@ UPDATE imdb_movies SET Budget_USD =
 	END;
 
 ```
+After cleaning unnecessary symbols and converting currencies, this is the result
+
+<!--- ![image](https://github.com/ulumbagas/cleaning_data_imdb_movie/assets/58242856/14c0b6e5-44ed-4c4f-80c4-800a7b398b93) --->
+
+<p align="center" width="35%">
+    <img width="35%" src="https://github.com/ulumbagas/cleaning_data_imdb_movie/assets/58242856/14c0b6e5-44ed-4c4f-80c4-800a7b398b93"> 
+</p>
