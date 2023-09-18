@@ -186,7 +186,7 @@ SET
 where income like '%$%';
 ```
 
-change Incone type data to BIGINT
+change Income type data to BIGINT
 ```
 ALTER TABLE `cleaning_table`.`imdb_movies` 
 CHANGE COLUMN `Income` `Income` BIGINT NULL DEFAULT NULL;
